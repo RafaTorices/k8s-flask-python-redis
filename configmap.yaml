@@ -1,0 +1,13 @@
+# Ejemplo de ConfigMap para el proyecto de Kubernetes
+# Se define un ConfigMap con una variable de entorno
+# que se usará en el deployment de la aplicación
+apiVersion: v1
+# ConfigMap es un tipo de objeto de Kubernetes
+kind: ConfigMap
+# metadata es un objeto que contiene información
+metadata:
+  name: redis-configmap
+# data es un objeto que contiene información
+# con las variables de entorno que se usarán en el deployment
+data:
+  REDIS_HOST: redis-service

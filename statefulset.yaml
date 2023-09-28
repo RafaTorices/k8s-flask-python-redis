@@ -1,0 +1,50 @@
+# Ejemplo de StatefulSet para el proyecto de Kubernetes
+# Se define un StatefulSet con 1 replica de la aplicación
+# Este StatefulSet se usará para desplegar el servicio de Redis
+# que se usará en la aplicación
+apiVersion: apps/v1
+# StatefulSet es un tipo de objeto de Kubernetes
+kind: StatefulSet
+metadata:
+  name: redis-statefulset
+# spec es un objeto que contiene información
+spec:
+  # ServiceName es el servicio que se va a crear
+  # para el StatefulSet
+  # En este caso se crea un servicio headless
+  serviceName: redis-headless
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  # template es el pod que se va a crear
+  template:
+    metadata:
+      labels:
+        app: redis
+    # spec es un objeto que contiene información
+    spec:
+      # contenedores que se van a ejecutar
+      containers:
+        - name: redis
+          image: redis
+          ports:
+            - containerPort: 6379
+          # volumenes que se van a montar usando el volumen persistente definido
+          # en el volumenClaimTemplates
+          volumeMounts:
+            - name: redis-persistent-storage
+              mountPath: /data
+  # volumenes que se van a crear haciendo uso del volumen persistente
+  volumeClaimTemplates:
+    - metadata:
+        name: redis-persistent-storage
+      # spec es un objeto que contiene información
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        # storageClassName es el tipo de almacenamiento que se va a usar
+        storageClassName: "standard"
+        # recursos que se van a usar en el volumen persistente
+        resources:
+          requests:
+            storage: 1Gi

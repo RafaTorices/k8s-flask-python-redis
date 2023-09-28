@@ -1,0 +1,24 @@
+# Ejemplo de Service para el proyecto de Kubernetes
+# Se define un Service para el deployment de la aplicación
+# que comunica con el servicio de Redis definido en el mismo namespace
+apiVersion: v1
+# Service es un tipo de objeto de Kubernetes
+kind: Service
+metadata:
+  name: redis-service
+# spec es un objeto que contiene información
+spec:
+  selector:
+    app: redis
+  ports:
+  - protocol: TCP
+    port: 6379
+    targetPort: 6379
+  # type es el tipo de servicio que se va a crear
+  # en este caso es ClusterIP
+  # que crea un servicio interno dentro del cluster
+  # para que los pods se puedan comunicar entre ellos
+  type: ClusterIP
+
+  
+

@@ -1,0 +1,35 @@
+# Ejemplo de Deployment para el proyecto de Kubernetes
+# Se define un Deployment con 3 replicas de la aplicación
+# y se usa la variable de entorno definida en el ConfigMap
+# para definir el host del servicio de Redis
+apiVersion: apps/v1
+# Deployment es un tipo de objeto de Kubernetes
+kind: Deployment
+# metadata es un objeto que contiene información
+metadata:
+  name: app-deployment
+  labels:
+    app: app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app
+  # template es el pod que se va a crear
+  template:
+    metadata:
+      labels:
+        app: app
+    # spec es un objeto que contiene información
+    # sobre el pod que se va a crear
+    # con los contenedores que se van a ejecutar
+    spec:
+      containers:
+        - name: app-container
+          image: rafacv99/test_keepcoding:1.0
+          ports:
+            - containerPort: 5000
+          # Inyecta la variable de entorno definida en el ConfigMap
+          envFrom:
+            - configMapRef:
+                name: redis-configmap

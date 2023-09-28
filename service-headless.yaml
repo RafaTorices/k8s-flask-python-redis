@@ -1,0 +1,26 @@
+# Ejemplo de Service headless para el proyecto de Kubernetes
+# Se define un Service de tipo headless para el StatefulSet de Redis
+# que comunica con el StatefulSet de Redis definido en el mismo namespace
+# Es de tipo headless porque los statefulsets necesitan un servicio headless
+# para poder comunicarse con los pods del statefulset de forma interna mediante DNS de forma
+# que se pueda hacer uso de los nombres de los pods para comunicarse entre ellos y no mediante
+# las ips de los pods ya que estas pueden cambiar y en los statefulsets se necesitan
+# pods accesibles y consistentes
+apiVersion: v1
+# Service es un tipo de objeto de Kubernetes
+kind: Service
+metadata:
+  name: redis-headless
+# spec es un objeto que contiene información
+spec:
+  selector:
+    app: redis
+  ports:
+  - protocol: TCP
+    port: 6379
+    # puerto donde se va a exponer el servicio de Redis dentro del cluster
+    targetPort: 6379
+  # type es el tipo de servicio que se va a crear
+  type: ClusterIP
+  # clusterIP es None para que el servicio sea headless
+  clusterIP: None
