@@ -3,7 +3,7 @@
 ### Rafael Torices
 
 **_Requisitos:_**
-
+Desplegar un configmap con los datos del redis host.
 
 **_Ejecución:_**
 Desplegar todos los ficheros yaml mediante el comando:
