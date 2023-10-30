@@ -4,6 +4,7 @@
 
 **_Requisitos:_**
 Desplegar un configmap con los datos del redis host.
+Hacer persistente el almacenamiento en redis mediante el uso de volumes.
 
 **_Ejecución:_**
 Desplegar todos los ficheros yaml mediante el comando:
